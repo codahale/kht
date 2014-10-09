@@ -3,8 +3,8 @@
 // A keyed hash tree is a hash tree which uses a keyed hash algorithm (e.g.,
 // HMAC), used to derive block-level keys for encrypting large files.
 //
-// The notion of a keyed hash tree comes from Li et al's papers on Horus, a
-// large-scale encrypted storage system:
+// The notion of a keyed hash tree comes from Rajendran, Li, et al's papers on
+// Horus, a large-scale encrypted storage system:
 //
 // http://www.ssrc.ucsc.edu/pub/rajendran11-pdsw.html
 //
