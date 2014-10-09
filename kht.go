@@ -4,14 +4,29 @@
 // HMAC), used to derive block-level keys for encrypting large files.
 //
 // The notion of a keyed hash tree comes from Rajendran, Li, et al's papers on
-// Horus, a large-scale encrypted storage system:
+// Horus, a large-scale encrypted storage system
+// (http://www.ssrc.ucsc.edu/pub/rajendran11-pdsw.html and
+// https://www.usenix.org/conference/fast13/technical-sessions/presentation/li_yan).
 //
-// http://www.ssrc.ucsc.edu/pub/rajendran11-pdsw.html
+// A keyed hash tree with a branching factor of 2 has log2(maxSize/blockSize)
+// levels, each with increasing numbers of keys.
 //
-// https://www.usenix.org/conference/fast13/technical-sessions/presentation/li_yan
+//     +-----------------------------------------------------------------------+
+//     |                                K(0,0)                                 |
+//     +-----------------------------------+-----------------------------------+
+//     |              K(1,0)               |              K(1,1)               |
+//     +-----------------+-----------------+-----------------+-----------------+
+//     |      K(2,0)     |     K(2,1)            K(2,3)      |     K(2,4)      |
+//     +--------+--------+--------+--------+--------+--------+--------+--------+
+//     | K(3,0) | K(3,1) | K(3,2) | K(3,3) | K(3,4) | K(3,5) | K(3,6) | K(3,7) |
+//     +--------+--------+--------+--------+--------+--------+--------+--------+
 //
-// This implementation derives keys from the level and the level offset, both
-// encoded as little-endian 64-bit unsigned integers.
+// The root node (the top of the diagram) uses the tree's root key, and the leaf
+// nodes (the bottom of the diagram) contain the keys used to encrypt the
+// corresponding blocks of data. The nodes are not materialized, which means a
+// keyed hash table takes a very small amount of memory (~100 bytes), and
+// deriving block keys is very fast (~8μs for each 1KiB block of a 2GiB tree
+// with a branching factor of 1024).
 package kht
 
 import (

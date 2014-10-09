@@ -52,7 +52,7 @@ func TestOffsetTooGreat(t *testing.T) {
 }
 
 func BenchmarkKey(b *testing.B) {
-	tree := kht.New(make([]byte, 32), kht.HMAC(sha256.New), 1024, 1<<32, 8)
+	tree := kht.New(make([]byte, 32), kht.HMAC(sha256.New), 1024, 1<<32, 1024)
 	b.ReportAllocs()
 	b.ResetTimer()
 
