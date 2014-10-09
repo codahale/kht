@@ -7,10 +7,11 @@
 // large-scale encrypted storage system:
 //
 // http://www.ssrc.ucsc.edu/pub/rajendran11-pdsw.html
+//
 // https://www.usenix.org/conference/fast13/technical-sessions/presentation/li_yan
 //
 // This implementation derives keys from the level and the level offset, both
-// encoded at little-Endian 64-bit unsigned integers.
+// encoded as little-endian 64-bit unsigned integers.
 package kht
 
 import (
