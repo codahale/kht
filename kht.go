@@ -26,7 +26,7 @@
 // corresponding blocks of data. The nodes are not materialized, which means a
 // keyed hash table takes a very small amount of memory (~100 bytes), and
 // deriving block keys is very fast (~8μs for each 1KiB block of a 2GiB tree
-// with a branching factor of 1024 using SHA-256).
+// with a branching factor of 1024 using HMAC-SHA-256).
 package kht
 
 import (
